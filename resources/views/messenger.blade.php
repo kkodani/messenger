@@ -33,6 +33,11 @@
             .title {
                 font-size: 96px;
             }
+
+            #message-body {
+                width: 30%;
+            }
+
         </style>
     </head>
     <body>
@@ -40,28 +45,14 @@
             <div class="content">
                 <div class="title">Twilio Messenger</div>
                 <div class="main-form">
-                  <form class="" action="index.html" method="post">
-                    <input type="text" name="phone" placeholder="10-digit phone number">
-                    <input type="text" name="msg" placeholder="Message">
-                    <button type="button" name="send">
+                  <form action="{{ url('sendMsg')}}" method="POST">
+                    {{ csrf_field() }}
+                    <input id="phone-input" type="text" name="phone" placeholder="10-digit phone number">
+                    <input id="message-body" type="text" name="message" placeholder="Message">
+                    <button id="send-button" type="submit" name="send">
                       Send
                     </button>
                   </form>
-                  <?php
-
-                    $fromPhone = getenv("TWILIO_PHONE");
-                    $client = new Services_Twilio(getenv("TWILIO_ACCOUNT_SID"), getenv("TWILIO_AUTH_TOKEN"));
-
-                    // $message = $client->account->messages->create(array(
-                    //   "From" => "+" . $fromPhone, // From a valid Twilio number
-                    //   "To" => "+1" . $toPhone,   // Text this number
-                    //   "Body" => "hidden phone",
-                    // ));
-
-                    // Display a confirmation message on the screen
-                    echo "Sent message!";
-
-                  ?>
                 </div>
             </div>
         </div>

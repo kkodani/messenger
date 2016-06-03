@@ -11,6 +11,26 @@
 |
 */
 
+use Illuminate\Http\Request;
+
 Route::get('/', function () {
     return view('messenger');
+});
+
+Route::post('/sendMsg', function (Request $req) {
+
+
+  $fromPhone = getenv("TWILIO_PHONE");
+  $toPhone = $req -> phone;
+  $messageBody = $req -> message;
+  $client = new Services_Twilio(getenv("TWILIO_ACCOUNT_SID"), getenv("TWILIO_AUTH_TOKEN"));
+
+  $message = $client->account->messages->create(array(
+    "From" => "+" . $fromPhone,
+    "To" => "+1" . $toPhone,
+    "Body" => $messageBody,
+  ));
+
+  echo "Sent message!";
+  return redirect('/');
 });
